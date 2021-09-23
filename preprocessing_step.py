@@ -3,10 +3,6 @@
 ##### Imports
 from termcolor import colored
 
-### Neo4j imports
-from neo4j import BoltStatementResult
-
-
 def preprocessing(driver):
     """  Queries a property graph using the driver to get all needed labels',properties' and nodes' information
 
@@ -38,7 +34,6 @@ def preprocessing(driver):
             UNWIND labs AS lab \
             RETURN DISTINCT lab"
             )
-        all_labels = BoltStatementResult.data(all_labels)
 
         distinct_labels = []
         for labs in all_labels:
@@ -51,7 +46,6 @@ def preprocessing(driver):
             "MATCH(n) \
             RETURN DISTINCT LABELS(n)"
             )
-        labels_sets = BoltStatementResult.data(labels_sets)
 
         labs_sets = []
         for labels_set in labels_sets:
@@ -65,27 +59,29 @@ def preprocessing(driver):
             "MATCH(n) \
             RETURN DISTINCT labels(n), keys(n), COUNT(n)"
             )
-        distinct_nodes = BoltStatementResult.data(distinct_nodes)
+
+        # Storing the number of repetitions of the node
+        amount_dict = {}
+
+        # transform neo4j dict to python list of string
+        list_of_distinct_nodes=[]
+
+        for node in distinct_nodes:
+            #get a list of labels
+            labels = sorted(node["labels(n)"])
+
+            #get a list of properties
+            properties = sorted(node["keys(n)"])
+
+            labels_properties = labels+properties
+            labels_properties_str = ' '.join(labels_properties)
+            if labels_properties_str in list_of_distinct_nodes:
+                amount_dict[labels_properties_str] += node["COUNT(n)"]
+            else:
+                list_of_distinct_nodes.append(labels_properties_str) 
+                amount_dict[labels_properties_str] = node["COUNT(n)"]
     print(colored("Done.", "green"))
 
-    # Storing the number of repetitions of the node
-    amount_dict = {}
 
-    # transform neo4j dict to python list of string
-    list_of_distinct_nodes=[]
-    for node in distinct_nodes:
-        #get a list of labels
-        labels = sorted(node["labels(n)"])
-
-        #get a list of properties
-        properties = sorted(node["keys(n)"])
-
-        labels_properties = labels+properties
-        labels_properties_str = ' '.join(labels_properties)
-        if labels_properties_str in list_of_distinct_nodes:
-            amount_dict[labels_properties_str] += node["COUNT(n)"]
-        else:
-            list_of_distinct_nodes.append(labels_properties_str) 
-            amount_dict[labels_properties_str] = node["COUNT(n)"]
 
     return amount_dict,list_of_distinct_nodes,distinct_labels,labs_sets
