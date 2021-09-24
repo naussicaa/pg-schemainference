@@ -13,7 +13,10 @@ driver = GraphDatabase.driver(uri, auth=(user, passwd), encrypted=False)
 
 def execute_query(query,driver):
 	with driver.session() as session:
+		t1 = time.perf_counter()
 		session.run(query)
+		tf1 = time.perf_counter()
+		print("Executing time: ", tf1-t1)
 
 query="MATCH (n) RETURN labels(n)"
 query2="MATCH (n)-[r]-(m) RETURN n,r,m LIMIT 1000"
@@ -24,4 +27,4 @@ t1 = time.perf_counter()
 for elt in l:
 	execute_query(elt,driver)
 tf1 = time.perf_counter()
-print("Executing time: ", tf1-t1)
+print("Total executing time: ", tf1-t1)
