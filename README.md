@@ -4,7 +4,7 @@
 This python project infers a schema from a PG stored in Neo4j. This method uses a clustering method, a Bayesian Gaussian Mixture Model, to gather similar nodes together. It is meant to deal with both unlabeled and labeled nodes, properties, multi-labeled nodes, overlapping types.
 
 ## Dependencies
-python modules : 
+Use pip to install these 3 python modules : 
 - termcolor
 - hdbscan==0.8.27
 - neo4j==4.3.4
