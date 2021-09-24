@@ -38,10 +38,9 @@ def preprocessing(driver):
         distinct_labels = []
         for labs in all_labels:
             distinct_labels.append(labs["lab"])
-    print(colored("Done.", "green"))
+        print(colored("Done.", "green"))
 
-    print(colored("Querying neo4j to get all distinct sets of labels:", "yellow"))
-    with driver.session() as session:
+        print(colored("Querying neo4j to get all distinct sets of labels:", "yellow"))
         labels_sets = session.run(
             "MATCH(n) \
             RETURN DISTINCT LABELS(n)"
@@ -50,10 +49,9 @@ def preprocessing(driver):
         labs_sets = []
         for labels_set in labels_sets:
             labs_sets.append(labels_set["LABELS(n)"])
-    print(colored("Done.", "green"))
+        print(colored("Done.", "green"))
 
-    print(colored("Querying neo4j to get all distinct sets of labels and props:", "yellow"))
-    with driver.session() as session:
+        print(colored("Querying neo4j to get all distinct sets of labels and props:", "yellow"))
         #get all nodes' labels and properties' names
         distinct_nodes = session.run(
             "MATCH(n) \
