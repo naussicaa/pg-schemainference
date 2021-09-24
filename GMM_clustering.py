@@ -328,7 +328,6 @@ def rec_clustering(amount_dict, correct_nodes, distinct_labels, all_clusters, hi
                 clusters[predictions[j]].append(node)
                 j+=1
 
-
         ### First cluster
         set_cluster_1 = set(clusters[0])
 

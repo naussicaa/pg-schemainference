@@ -27,7 +27,7 @@ if __name__ == "__main__":
     user = input("Neo4j username: ")
     passwd = input('Neo4j password: ')
     driver = GraphDatabase.driver(uri, auth=(user, passwd), encrypted=False) # set encrypted to False to avoid possible errors
-
+    
     print(colored("Starting to query on ", "red"), colored(DBname, "red"), colored(":","red"))
     t1 = time.perf_counter()
     amount_dict,list_of_distinct_nodes,distinct_labels,labs_sets = preprocessing(driver)
@@ -71,19 +71,15 @@ if __name__ == "__main__":
 
     print("---------------")
 
-    """
     ### Uncomment to compute the f-score
 
-    q = input("Do you want to compute the f-score ? (Only LDBC) y/n")
+    q = input("Do you want to compute the f-score ? (only LDBC) y/n")
 
     if q == "y":
         f_score = compute_f_score(test, distinct_labels, file)
         print("F-score : ", f_score)
         print("---------------")
 
-    """
-
-    """
     ### Uncomment to compute Rand Index and Adjusted Mutual Information
     q2 = input("Do you want to compute the Adjusted Rand Index/Adjusted Mutual Information between this clustering and Hdbscan's one ? y/n")
     if q2 == "y":
@@ -95,9 +91,6 @@ if __name__ == "__main__":
         print("Rand Index : ",ari)
         print("Adjusted Mutual Information : ",ami)
 
-    """
-
-    """
     ### Uncomment to create a Neo4j with the resulting infered schema
     q3 = input("Do you want to create a neo4j graph ? y/n")
 
@@ -110,5 +103,3 @@ if __name__ == "__main__":
         step4 = t4f - t4
         print(colored("Graph created.", "green"))
         print("Step 4: Creating neo4j graph was completed in ", step4, "s")
-    
-    """
