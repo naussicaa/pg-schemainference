@@ -51,26 +51,40 @@ def storing(distinct_labels,labs_sets,hierarchy_tree):
             # labels
             data_line.append(":".join(labels))
 
-            # no properties for base types
-            data_line.append("")
-
-            # no supertypes for base types
-            data_line.append("")
-
-            # the name of the infered type
-            data_line.append("T1")
-
-            # is a base type
-            data_line.append("yes")
-
-            writer.writerow(data_line)
-
             i+=1
 
             lcluster = basic_type[1]
             rcluster = basic_type[2]
 
             k = 2
+            properties = ""
+
+            if lcluster is not None and rcluster is not None:
+                lset = set(list(lcluster[0])[0].split())
+                rset = set(list(rcluster[0])[0].split())
+                inter = lset.intersection(rset)
+                inter_list_props = []
+                for elt in inter:
+                    if elt not in distinct_labels:
+                        inter_list_props.append(elt)
+
+                properties = ":".join(sorted(inter_list_props))
+
+            if properties != "":
+
+                # intersection of properties
+                data_line.append(properties)
+
+                # no supertypes for base types
+                data_line.append("")
+
+                # the name of the infered type
+                data_line.append("T1")
+
+                # is a base type
+                data_line.append("yes")
+
+                writer.writerow(data_line)
 
             # search for subtypes
             if lcluster is not None:
