@@ -48,6 +48,8 @@ For fib25 :
 
 Launch the database.
 
+## The Covid-19 graph is accessible here [Cord-19](https://github.com/covidgraph/data_cord19).
+
 ## Running the project
 1. python3 cluster_script.py
 2. Enter Neo4j database info :
