@@ -1,5 +1,20 @@
 # Property graph inference (PG)
 
+## To cite us, use the following BibTex references:
+
+```
+@inproceedings{DBLP:conf/edbt/BonifatiDM22,
+  author    = {Angela Bonifati and
+               Stefania Dumbrava and
+               Nicolas Mir},
+  title     = {Hierarchical Clustering for Property Graph Schema Discovery},
+  booktitle = {{EDBT}},
+  pages     = {2:449--2:453},
+  publisher = {OpenProceedings.org},
+  year      = {2022}
+}
+```
+
 ## About the project
 This python project infers a schema from a PG stored in Neo4j. This method uses a clustering method, a Bayesian Gaussian Mixture Model, to gather similar nodes together. It is meant to deal with both unlabeled and labeled nodes, properties, multi-labeled nodes, overlapping types.
 
